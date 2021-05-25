@@ -41,8 +41,11 @@ const Dashboard: React.FC = () => {
     api
       .get(`repos/${newRepo}`)
       .then((res: AxiosResponse<Repository>) => {
+        console.log(res);
+
         if (res.status >= 200 && res.status <= 299) {
           setRepositories([...repositories, res.data]);
+          console.log(repositories);
         } else {
           throw new Error(res.statusText);
         }
@@ -85,7 +88,7 @@ const Dashboard: React.FC = () => {
     <>
       <img src={logoImg} alt="Github Explorer" />
       <Title>Explorador de repositórios do GitHub</Title>
-      <Form hasError={!!inputErro} onSubmit={handleAddRepository}>
+      <Form hasError={!!inputErro} onSubmit={handleAddRepoWithPromise}>
         <input
           value={newRepo}
           onChange={(evt) => setNewRepo(evt.target.value)}
